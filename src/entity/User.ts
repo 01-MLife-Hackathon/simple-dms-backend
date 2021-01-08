@@ -14,16 +14,4 @@ export class User {
 
   @Column()
   password: string;
-
-  @Column()
-  team: string;
-
-  @Column()
-  email: string;
-
-  @Column()
-  score: number;
-
-  @Column()
-  rank: number;
 }

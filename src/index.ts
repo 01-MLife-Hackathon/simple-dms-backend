@@ -8,12 +8,6 @@ import helmet from 'koa-helmet';
 import http from 'http';
 
 import {createConnection} from "typeorm";
-import {Admin} from "./entity/Admin";
-import {Email_check} from "./entity/Email_check";
-import {Log} from "./entity/Log";
-import {Quiz} from "./entity/Quiz";
-import {Solved} from "./entity/Solved";
-import {User} from "./entity/User";
 
 createConnection().then(async connection => {
 }).catch(error => console.log(error));

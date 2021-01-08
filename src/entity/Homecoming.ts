@@ -1,7 +1,7 @@
 import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 
 @Entity()
-export class Admin {
+export class Homecoming {
 
   @PrimaryGeneratedColumn()
   num: number;
@@ -10,11 +10,5 @@ export class Admin {
   name: string;
 
   @Column()
-  id: string;
-
-  @Column()
-  password: string;
-
-  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
-  date: string;
+  homecoming: number;
 }

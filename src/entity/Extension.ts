@@ -1,7 +1,7 @@
 import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 
 @Entity()
-export class Log {
+export class Extension {
 
   @PrimaryGeneratedColumn()
   num: number;
@@ -10,11 +10,8 @@ export class Log {
   name: string;
 
   @Column()
-  id: string;
+  classNum: number;
 
   @Column()
-  contents: string;
-
-  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
-  date: string;
+  seatNum: number;
 }
