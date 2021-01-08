@@ -1,10 +1,12 @@
-
+import redis from "redis";
 import {createConnection, getConnection} from "typeorm";
 import {logindms, infodms} from "../lib/request";
 
 const connetion = createConnection();
+const client = redis.createClient();
 
-export const login = (async (ctx,next) => {
+
+export const login = (async (ctx,next) => { // 0
   const { id } = ctx.request.body;
   const { password } = ctx.request.body;
   const accessToken = await logindms(id, password);
@@ -17,8 +19,10 @@ export const login = (async (ctx,next) => {
     if (user[0] == undefined) {//유저가 없을경우 신규 계정 생성
       await getConnection().query(`insert user(name, id, password) values('${userInformation}','${id}','${password}');`);
     }
+    
+    await client.set(`token-${userInformation}`, accessToken);
     status = 201;
-    body = { "accessToken" : accessToken };
+    body = { "name" : userInformation, "accessToken" : accessToken };
   }else{
     status = 403;
     body = { 
