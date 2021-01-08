@@ -8,8 +8,10 @@ import helmet from 'koa-helmet';
 import http from 'http';
 
 import {createConnection} from "typeorm";
+const connetion = createConnection();
 
-createConnection().then(async connection => {
+connetion.then(async connection => {
+  console.log("database check complite");
 }).catch(error => console.log(error));
 
 import api from './api';
