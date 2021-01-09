@@ -140,3 +140,27 @@ export const extensionInfo = (async (ctx,next) => { // 0
   ctx.status = 200;
   ctx.body = rows;
 });
+
+export const extensionCancel  = (async (ctx,next) => { // 0
+  const { name } = ctx.query;
+  const user = await getConnection().query(`select name from user where name = '${name}';`);
+  let body,status,sql;
+
+  if (user[0] != undefined) {
+    sql = `delete from extension where name = '${name}';`;
+    await getConnection().query(sql);
+    
+    status = 201;
+    body = {};
+  }else{
+    status = 412;
+    body = {
+      "errorMessage" : "invalid_account",
+      "errorCode" : "E108",
+      "errorDescription" : "존재하지 않는 계정"
+    };
+  }
+
+  ctx.status = status;
+  ctx.body = body;
+});
