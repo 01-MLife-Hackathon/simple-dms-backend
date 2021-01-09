@@ -1,4 +1,4 @@
-import redis from "redis";
+import redis from "async-redis";
 import {createConnection, getConnection} from "typeorm";
 import {logindms, infodms} from "../lib/request";
 
@@ -19,8 +19,8 @@ export const login = (async (ctx,next) => { // 0
     if (user[0] == undefined) {//유저가 없을경우 신규 계정 생성
       await getConnection().query(`insert user(name, id, password) values('${userInformation}','${id}','${password}');`);
     }
-    
-    await client.set(`token-${userInformation}`, accessToken);
+
+    await client.set(`token-${userInformation}`, accessToken, );
     status = 201;
     body = { "name" : userInformation, "accessToken" : accessToken };
   }else{
@@ -44,12 +44,31 @@ export const extension  = (async (ctx,next) => {
   ctx.body = 'body';
 });
 
-export const homecoming = (async (ctx,next) => {
-  console.log("asdasdasdad");
-  
+export const homecoming = (async (ctx,next) => { // 0
+  const { name } = ctx.query;
+  const { value } = ctx.request.body;
+  const user = await getConnection().query(`select name from user where name = '${name}';`);
+  let body,status,sql;
 
-  ctx.status = 200;
-  ctx.body = 'body';
+  if (user[0] != undefined) {
+    sql = `
+    INSERT INTO Homecoming(name, homecoming) VALUES ('${name}', ${value}) ON DUPLICATE KEY 
+    UPDATE homecoming = ${value};`;
+    await getConnection().query(sql);
+
+    status = 201
+    body = {};
+  }else{
+    status = 412;
+    body = {
+      "errorMessage" : "invalid_account",
+      "errorCode" : "E108",
+      "errorDescription" : "존재하지 않는 계정",
+    };
+  }
+
+  ctx.status = status;
+  ctx.body = body;
 });
 
 export const reissuance = (async (ctx,next) => {
