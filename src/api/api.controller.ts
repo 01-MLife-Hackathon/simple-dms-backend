@@ -131,11 +131,10 @@ export const reissuance = (async (ctx,next) => { // 0
   ctx.body = body;
 });
 
-export const extensionInfo = (async (ctx,next) => {
-  const { classNum } = ctx.query;
+export const extensionInfo = (async (ctx,next) => { // 0
   let sql,rows;
 
-  sql = `select * from extension where classNum = ${classNum} order by seatNum asc;`;
+  sql = `select * from extension;`;
   rows = await getConnection().query(sql);
 
   ctx.status = 200;
