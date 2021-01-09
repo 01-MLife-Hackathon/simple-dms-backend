@@ -1,12 +1,9 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryColumn, Column} from "typeorm";
 
 @Entity()
 export class Extension {
 
-  @PrimaryGeneratedColumn()
-  num: number;
-
-  @Column()
+  @PrimaryColumn()
   name: string;
 
   @Column()
