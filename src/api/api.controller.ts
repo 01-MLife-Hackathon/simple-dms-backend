@@ -28,7 +28,7 @@ export const login = (async (ctx,next) => { // 0
     body = { 
     "errorMessage" : "invalid_account",
     "errorCode" : "E101",
-    "errorDescription" : "id 및 password가 일치하지 않음",
+    "errorDescription" : "id 및 password가 일치하지 않음"
     };
   }
   
@@ -36,12 +36,44 @@ export const login = (async (ctx,next) => { // 0
   ctx.body = body;
 });
 
-export const extension  = (async (ctx,next) => {
-  console.log("asdasdasdad");
-  
+export const extension  = (async (ctx,next) => { // 0
+  const { name } = ctx.query;
+  const { classNum } = ctx.request.body;
+  const { seatNum } = ctx.request.body;
+  const user = await getConnection().query(`select name from user where name = '${name}';`);
+  let body,status,sql,rows;
 
-  ctx.status = 200;
-  ctx.body = 'body';
+  if (user[0] != undefined) {
+    sql = `select * from extension where name != '${name}' AND classNum = ${classNum} AND seatNum = ${seatNum};`;
+    rows = await getConnection().query(sql);
+    
+    if (rows[0] == undefined) {
+      sql = `insert into extension values('${name}', ${classNum}, ${seatNum}) ON DUPLICATE KEY 
+      UPDATE classNum = ${classNum}, seatNum = ${seatNum};`;
+      await getConnection().query(sql);
+      
+      status = 201;
+      body = {};
+    }else{
+      status = 403;
+      body = {
+        "errorMessage" : "invalid_grant",
+        "errorCode" : "E303",
+        "errorDescription" : "중복 데이터 존재"
+      };
+    }
+
+  }else{
+    status = 412;
+    body = {
+      "errorMessage" : "invalid_account",
+      "errorCode" : "E108",
+      "errorDescription" : "존재하지 않는 계정"
+    };
+  }
+
+  ctx.status = status;
+  ctx.body = body;
 });
 
 export const homecoming = (async (ctx,next) => { // 0
@@ -56,14 +88,14 @@ export const homecoming = (async (ctx,next) => { // 0
     UPDATE homecoming = ${value};`;
     await getConnection().query(sql);
 
-    status = 201
+    status = 201;
     body = {};
   }else{
     status = 412;
     body = {
       "errorMessage" : "invalid_account",
       "errorCode" : "E108",
-      "errorDescription" : "존재하지 않는 계정",
+      "errorDescription" : "존재하지 않는 계정"
     };
   }
 
@@ -71,10 +103,30 @@ export const homecoming = (async (ctx,next) => { // 0
   ctx.body = body;
 });
 
-export const reissuance = (async (ctx,next) => {
-  console.log("asdasdasdad");
+export const reissuance = (async (ctx,next) => { // 0
+  const { name } = ctx.query;
+  const user = await getConnection().query(`select name from user where name = '${name}';`);
+  let body,status,sql,rows,accessToken;
   
 
-  ctx.status = 200;
-  ctx.body = 'body';
+  if (user[0] != undefined) {
+    sql = `select id, password from user where name = '${name}';`;
+    rows = await getConnection().query(sql);
+    
+    accessToken = await logindms(rows[0]['id'], rows[0]['password']);
+    await client.set(`token-${name}`, accessToken);
+    
+    status = 201;
+    body = { "name" : name, "accessToken" : accessToken };
+  }else{
+    status = 412;
+    body = {
+      "errorMessage" : "invalid_account",
+      "errorCode" : "E108",
+      "errorDescription" : "존재하지 않는 계정"
+    };
+  }
+
+  ctx.status = status;
+  ctx.body = body;
 });
