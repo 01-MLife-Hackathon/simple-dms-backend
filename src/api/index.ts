@@ -9,7 +9,7 @@ api.post('/extension', extension);
 api.post('/homecoming', homecoming);
 api.get('/reissuance', reissuance);
 api.get('/extensionInfo', extensionInfo);
-api.get('/extensioncancel', extensionCancel);
+api.delete('/extensioncancel', extensionCancel);
 
 
 export default api;
