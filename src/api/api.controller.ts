@@ -103,6 +103,17 @@ export const homecoming = (async (ctx,next) => { // 0
   ctx.body = body;
 });
 
+export const homecomingInfo = (async (ctx,next) => {
+  const { name } = ctx.query;
+  let sql,rows;
+
+  sql = `select * from homecoming where name = '${name}';`;
+  rows = await getConnection().query(sql);
+
+  ctx.status = 200;
+  ctx.body = rows;
+});
+
 export const reissuance = (async (ctx,next) => { // 0
   const { name } = ctx.query;
   const user = await getConnection().query(`select name from user where name = '${name}';`);
@@ -164,4 +175,11 @@ export const extensionCancel  = (async (ctx,next) => { // 0
 
   ctx.status = status;
   ctx.body = body;
+});
+
+export const meal = (async (ctx,next) => { // 0
+  let meal = mealdms();
+  
+  ctx.status = 200;
+  ctx.body = meal;
 });
