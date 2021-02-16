@@ -1,6 +1,6 @@
 import redis from "async-redis";
 import {createConnection, getConnection} from "typeorm";
-import {logindms, infodms} from "../lib/request";
+import {logindms, infodms, mealdms} from "../lib/request";
 
 const connetion = createConnection();
 const client = redis.createClient();
@@ -179,7 +179,7 @@ export const extensionCancel  = (async (ctx,next) => { // 0
 
 export const meal = (async (ctx,next) => { // 0
   let meal = mealdms();
-  
+
   ctx.status = 200;
   ctx.body = meal;
 });
