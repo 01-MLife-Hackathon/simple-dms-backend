@@ -54,9 +54,9 @@ export const infodms = (async (accessToken) => {
 export const mealdms = (async () => {
   let meal;
   let date = new Date();
-  let year = today.getFullYear();
-  let month = today.getMonth() + 1;
-  let date = today.getDate(); 
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let date = date.getDate(); 
 
   let options = {
     uri: `${process.env.date_request}${year}-${month}-${date}`, 
