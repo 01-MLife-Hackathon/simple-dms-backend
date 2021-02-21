@@ -50,3 +50,30 @@ export const infodms = (async (accessToken) => {
   
   return name;
 });
+
+export const mealdms = (async () => {
+  let meal;
+  let date = new Date();
+  let year = today.getFullYear();
+  let month = today.getMonth() + 1;
+  let date = today.getDate(); 
+
+  let options = {
+    uri: `${process.env.date_request}${year}-${month}-${date}`, 
+    method: 'GET',
+    json:true
+  };
+
+  await request(options).then(async (parsedBody) => {
+    console.log(`정보 불러오기 완료`);
+    console.log(parsedBody);
+    
+    if (parsedBody == undefined) {
+      meal = false;
+    }else{
+      meal = parsedBody[`${year}-${month}-${date}`];
+    }
+  });
+  
+  return meal;
+});
