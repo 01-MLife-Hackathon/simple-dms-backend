@@ -54,12 +54,12 @@ export const infodms = (async (accessToken) => {
 export const mealdms = (async () => {
   let meal;
   let today = new Date();
-  let year = today.getFullYear();
-  let month = today.getMonth() + 1;
-  let date = today.getDate(); 
+  let year = await today.getFullYear();
+  let month = await today.getMonth() + 1;
+  let date = await today.getDate(); 
 
   let options = {
-    uri: `${process.env.date_request}${year}-${month}-${date}`, 
+    uri: `https://api.dsm-dms.com/meal/${year}-${month}-${date}`, 
     method: 'GET',
     json:true
   };
