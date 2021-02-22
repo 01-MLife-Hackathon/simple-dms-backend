@@ -2,8 +2,10 @@ import redis from "async-redis";
 import {createConnection, getConnection} from "typeorm";
 import {logindms, infodms, mealdms} from "../lib/request";
 
-const connetion = createConnection();
+//const connetion = createConnection();
 const client = redis.createClient();
+
+//console.log(await getConnection().query(`select * from user where name = '${userInformation}';`););
 
 
 export const login = (async (ctx,next) => { // 0
@@ -111,7 +113,7 @@ export const homecomingInfo = (async (ctx,next) => {
   rows = await getConnection().query(sql);
 
   ctx.status = 200;
-  ctx.body = rows;
+  ctx.body = rows[0];
 });
 
 export const reissuance = (async (ctx,next) => { // 0
