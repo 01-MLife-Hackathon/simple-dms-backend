@@ -7,7 +7,7 @@ import {login, extension, homecoming, homecomingInfo, reissuance, extensionInfo,
 api.post('/auth', login);
 api.post('/extension', extension);
 api.post('/homecoming', homecoming);
-api.post('/homecomingInfo', homecoming);
+api.get('/homecomingInfo', homecomingInfo);
 api.get('/reissuance', reissuance);
 api.get('/extensionInfo', extensionInfo);
 api.delete('/extensioncancel', extensionCancel);
