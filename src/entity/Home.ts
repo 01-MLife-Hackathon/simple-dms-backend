@@ -1,7 +1,7 @@
 import {Entity, PrimaryColumn, Column} from "typeorm";
 
 @Entity()
-export class Homecoming {
+export class Home {
 
   @PrimaryColumn()
   name: string;
