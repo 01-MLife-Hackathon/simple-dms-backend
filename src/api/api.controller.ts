@@ -107,7 +107,7 @@ export const homecomingInfo = (async (ctx,next) => {
   const { name } = ctx.query;
   let sql,rows;
 
-  sql = `select * from homecoming where name = '${name}';`;
+  sql = `select * from Homecoming where name = '${name}';`;
   rows = await getConnection().query(sql);
 
   ctx.status = 200;
