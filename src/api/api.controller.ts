@@ -84,7 +84,7 @@ export const homecoming = (async (ctx,next) => { // 0
 
   if (user[0] != undefined) {
     sql = `
-    INSERT INTO Homecoming(name, homecoming) VALUES ('${name}', ${value}) ON DUPLICATE KEY 
+    INSERT INTO Home(name, homecoming) VALUES ('${name}', ${value}) ON DUPLICATE KEY 
     UPDATE homecoming = ${value};`;
     await getConnection().query(sql);
 
@@ -107,7 +107,7 @@ export const homecomingInfo = (async (ctx,next) => {
   const { name } = ctx.query;
   let sql,rows;
 
-  sql = `select * from Homecoming where name = '${name}';`;
+  sql = `select * from Home where name = '${name}';`;
   rows = await getConnection().query(sql);
 
   ctx.status = 200;
