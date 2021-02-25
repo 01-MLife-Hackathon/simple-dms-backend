@@ -84,6 +84,10 @@ export const homecoming = (async (ctx,next) => { // 0
   const user = await getConnection().query(`select name from user where name = '${name}';`);
   let body,status,sql;
 
+  console.log(name);
+  console.log(value);
+  console.log(user);
+  
   if (user[0] != undefined) {
     sql = `
     INSERT INTO home(name, homecoming) VALUES ('${name}', ${value}) ON DUPLICATE KEY 
