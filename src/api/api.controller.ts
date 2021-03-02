@@ -150,14 +150,38 @@ export const reissuance = (async (ctx,next) => { // 0
 
 export const extensionInfo = (async (ctx,next) => { // 0
   const { classNum } = ctx.query;
-  let sql,rows;
+  const { name } = ctx.query;
+  let sql,rows,status,body;
+  
+  if (classNum != undefined&& name == undefined) {
+    sql = `select * from extension where classNum = '${classNum}' order by seatNum;`;
+    status = 200
+    body = await getConnection().query(sql);
 
-  sql = `select * from extension where classNum = '${classNum}' order by seatNum;`;
-  rows = await getConnection().query(sql);
+  }else if(classNum == undefined&& name != undefined){
+    sql = `select * from extension where name = '${name}';`;
+    status = 200
+    body = await getConnection().query(sql)[0];
 
-  ctx.status = 200;
-  ctx.body = rows;
+    if (rows != undefined) {
+      body = true;
+    }else{
+      body = false;
+    }
+  }else{
+    status = 400;
+    body = {
+      errorMessage : "E401",
+      errorCode : "invalid_from",
+      errorDescription : "잘못된 형식의 요청"
+    };
+  }
+
+  ctx.status = status;
+  ctx.body = body;
 });
+
+
 
 export const extensionCancel  = (async (ctx,next) => { // 0
   const { name } = ctx.query;
