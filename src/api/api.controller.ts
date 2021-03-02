@@ -161,7 +161,7 @@ export const extensionInfo = (async (ctx,next) => { // 0
   }else if(classNum == undefined&& name != undefined){
     sql = `select * from extension where name = '${name}';`;
     status = 200
-    body = await getConnection().query(sql)[0];
+    rows = await getConnection().query(sql)[0];
 
     if (rows != undefined) {
       body = true;
