@@ -162,8 +162,6 @@ export const extensionInfo = (async (ctx,next) => { // 0
     sql = `select * from extension where name = '${name}';`;
     status = 200
     rows = await getConnection().query(sql);
-    console.log(rows[0]);
-    console.log(rows);
     
     if (rows[0] != undefined) {
       body = true;
