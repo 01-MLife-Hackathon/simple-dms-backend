@@ -208,7 +208,7 @@ export const extensionCancel  = (async (ctx,next) => { // 0
 });
 
 export const meal = (async (ctx,next) => { // 0
-  let meal = mealdms();
+  let meal = await mealdms();
 
   ctx.status = 200;
   ctx.body = meal;

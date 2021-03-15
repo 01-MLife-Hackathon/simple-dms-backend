@@ -55,8 +55,9 @@ export const mealdms = (async () => {
   let meal;
   let today = new Date();
   let year = await today.getFullYear();
-  let month = await today.getMonth() + 1;
-  let date = await today.getDate(); 
+  let month = await today.getMonth() + 1 >= 10 ? (today.getMonth() + 1) : '0' + (today.getMonth() + 1);
+  let date = await today.getDate() >= 10 ? today.getDate() : '0' + today.getDate();
+
 
   let options = {
     uri: `https://api.dsm-dms.com/meal/${year}-${month}-${date}`, 
@@ -66,7 +67,7 @@ export const mealdms = (async () => {
 
   await request(options).then(async (parsedBody) => {
     console.log(`정보 불러오기 완료`);
-    console.log(parsedBody);
+    console.log(`${year}-${month}-${date}`);
     
     if (parsedBody == undefined) {
       meal = false;
