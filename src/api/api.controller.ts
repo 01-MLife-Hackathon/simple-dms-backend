@@ -181,8 +181,6 @@ export const extensionInfo = (async (ctx,next) => { // 0
   ctx.body = body;
 });
 
-
-
 export const extensionCancel  = (async (ctx,next) => { // 0
   const { name } = ctx.query;
   const user = await getConnection().query(`select name from user where name = '${name}';`);

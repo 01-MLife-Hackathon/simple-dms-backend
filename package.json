@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node src/",
+    "start:m": "ts-node macro_src/",
     "start:dev": "nodemon --exec ts-node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -27,8 +28,10 @@
     "koa-helmet": "^6.0.0",
     "koa-logger": "^3.2.1",
     "koa-send": "^5.0.1",
+    "mariadb": "^2.5.3",
     "multer": "^1.4.2",
     "mysql": "^2.5.2",
+    "node-schedule": "^2.0.0",
     "reflect-metadata": "^0.1.13",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
