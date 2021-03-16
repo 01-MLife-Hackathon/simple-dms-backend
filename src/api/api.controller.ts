@@ -19,7 +19,7 @@ export const login = (async (ctx,next) => { // 0
     const user = await getConnection().query(`select * from user where name = '${userInformation}';`);
     
     if (user[0] == undefined) {//유저가 없을경우 신규 계정 생성
-      await getConnection().query(`insert user(name, id, password) values('${userInformation}','${id}','${password}');`);
+      await getConnection().query(`insert user(name, id, password, token) values('${userInformation}','${id}','${password}','');`);
     }
 
     await client.set(`token-${userInformation}`, accessToken, );
